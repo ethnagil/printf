@@ -67,7 +67,7 @@ void	*ft_flag_neg(char *str, char sp)
 		j++;
 	while ((j + k) <= i)
 	{
-		str2[k] = str[(k - 1) + j];
+		str2[k] = str[k + j];
 		k++;
 	}
 	while (k < i)
