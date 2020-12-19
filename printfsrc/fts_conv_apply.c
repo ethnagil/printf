@@ -6,27 +6,27 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:00:21 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/18 19:34:41 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/19 17:48:45 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libftprintf.h"
 
-int		ft_readconvert(char *convert, const char *format, int i, va_list args)
+int		ft_readconvert(char *convert, const char *format, int f, va_list args)
 {
 	int		j;
 	int		k;
 	char	*wildcard;
 
-	wildcard = NULL;
+//	wildcard = NULL;
 	ft_bzero(convert, MAXCONV);
 	j = 0;
 	k = 0;
-	while ((ft_elementof((char)format[i], FLAGS)) ||
-		(ft_isdigit(format[i]) || (format[i] == '.')) ||
-		(ft_elementof((char)format[i], L_MODIFIER)))
+	while ((ft_elementof((char)format[f], FLAGS)) ||
+		(ft_isdigit(format[f]) || (format[f] == '.')) ||
+		(ft_elementof((char)format[f], L_MODIFIER)))
 	{
-		if (format[i] == '*')
+		if (format[f] == '*')
 		{
 			wildcard = ft_itoa_base((long long)va_arg(args, int), TEN, 0);
 			while (wildcard[k])
@@ -34,18 +34,18 @@ int		ft_readconvert(char *convert, const char *format, int i, va_list args)
 			j--;	
 		}
 		else 
-			convert[j] = format[i];
+			convert[j] = format[f];
 		j++;
-		i++;
+		f++;
 	}
-	return (i);
+	return (f);
 }
 
 char	*ft_va_argtostr(char spec, char *convert, va_list args)
 {
 	char *prstr;
 
-	prstr = NULL;
+//	prstr = NULL;
 	if (spec == 'c')
 		prstr = ft_c_to_str((unsigned char)va_arg(args, int));
 	else if (spec == 's')
@@ -64,8 +64,8 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args)
 		prstr = ft_strdup("%");
 	if (prstr)
 		prstr = ft_apply_convert(prstr, convert, spec);
-//	else
-//		prstr = NULL;
+	else
+		prstr = ft_strdup("\0");
 //		prstr = ft_strdup("undefined behavior or invalid flags or specifiers");
 	return (prstr);
 }
