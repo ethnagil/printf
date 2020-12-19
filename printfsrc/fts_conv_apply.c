@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:00:21 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/19 17:48:45 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/19 19:52:28 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		ft_readconvert(char *convert, const char *format, int f, va_list args)
 	int		k;
 	char	*wildcard;
 
-//	wildcard = NULL;
 	ft_bzero(convert, MAXCONV);
 	j = 0;
 	k = 0;
@@ -31,9 +30,9 @@ int		ft_readconvert(char *convert, const char *format, int f, va_list args)
 			wildcard = ft_itoa_base((long long)va_arg(args, int), TEN, 0);
 			while (wildcard[k])
 				convert[j++] = wildcard[k++];
-			j--;	
+			j--;
 		}
-		else 
+		else
 			convert[j] = format[f];
 		j++;
 		f++;
@@ -45,11 +44,12 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args)
 {
 	char *prstr;
 
-//	prstr = NULL;
 	if (spec == 'c')
 		prstr = ft_c_to_str((unsigned char)va_arg(args, int));
 	else if (spec == 's')
+	{
 		prstr = ft_strdup(va_arg(args, char *));
+	}
 	else if (spec == 'p')
 		prstr = ft_itoa_base(va_arg(args, long long), hex, 0);
 	else if (spec == 'd' || spec == 'i')
@@ -66,7 +66,6 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args)
 		prstr = ft_apply_convert(prstr, convert, spec);
 	else
 		prstr = ft_strdup("\0");
-//		prstr = ft_strdup("undefined behavior or invalid flags or specifiers");
 	return (prstr);
 }
 
@@ -87,12 +86,6 @@ char	*ft_apply_convert(char *prstr, char *convert, char spec)
 			prstr = convert_fts[i++](prstr, spec);
 		}
 	}
-	else
-	{
-		if (prstr)
-			free(prstr);
-		prstr = ft_strdup("Undefined bahavior or invalid flags or specifiers");
-	}
 	return (prstr);
 }
 
@@ -101,15 +94,10 @@ int		ft_check_convert(char *convert, char spec)
 	int i;
 
 	(void)spec;
-
-//	if ((ft_elementof('0', convert)) && (ft_elementof(spec, "csp")))
-//		return (0);
-//	if ((ft_elementof(' ', convert)) && (ft_elementof(spec, "cspuxX")))
-//		return (0);
 	i = 0;
 	while (convert[i])
 	{
-		if ((convert[i] == '0') && ((ft_elementof('-', convert)) || 
+		if ((convert[i] == '0') && ((ft_elementof('-', convert)) ||
 									(ft_elementof('.', convert))))
 			while (convert[i])
 			{
@@ -138,8 +126,6 @@ void	ft_build_convert(flag_function *convert_fts, char *convert,
 			convert_fts[i] = &ft_flag_space;
 		if (convert[i] == '0')
 			convert_fts[i] = &ft_flag_zero;
-		if (convert[i] == '#')
-			convert_fts[i] = &ft_flag_hash;
 		i++;
 	}
 	convert_fts[i] = NULL;
