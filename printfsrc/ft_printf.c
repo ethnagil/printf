@@ -21,7 +21,9 @@ int		ft_printf(const char *format, ...)
 	int		i;
 	char	convert[MAXCONV];
 	char	*printstr;
+	int	n;
 
+	n = 0;
 	printstr = NULL;
 //	if (!format)
 //		return(0);
@@ -31,22 +33,26 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			i++;
-			i = ft_readconvert(convert, format, i, args);
+	//		i++;
+			i = ft_readconvert(convert, format, ++i, args);
 			if (format[i])
 			{
 				printstr = ft_va_argtostr(format[i], convert, args);
-				if (printstr)
+	//?			if (printstr)
 					ft_putstr_fd(printstr, 1);
-			}
+				n = n + ft_strlen(printstr);
+			}n
 		}
 		else
+		{
 			ft_putchar_fd(format[i], 1);
+			n++;
+		}
 		if (format[i])
 			i++;
 	}
 	if (printstr)
 		free(printstr);
 	va_end(args);
-	return (0);
+	return (n);
 }
