@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 14:25:06 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/19 19:49:07 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/20 18:52:53 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*ft_add_leading(char *str, int n)
 void	*ft_run_length(char *str, int specifier1, int specifier2, char spec)
 {
 	int		i;
-	char	*str2;
 
 	if (specifier2 > 0)
 	{
@@ -109,7 +108,7 @@ void	*ft_flag_zero(char *str, char sp)
 	{
 		str[i++] = '0';
 	}
-	if (str[i] == '-')
+	if ((i > 0) && (str[i] == '-'))
 	{
 		str[0] = '-';
 		str[i] = '0';

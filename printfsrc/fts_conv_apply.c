@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:00:21 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/19 19:52:28 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/20 18:31:16 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,11 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args)
 {
 	char *prstr;
 
+	prstr = NULL;
 	if (spec == 'c')
 		prstr = ft_c_to_str((unsigned char)va_arg(args, int));
 	else if (spec == 's')
-	{
 		prstr = ft_strdup(va_arg(args, char *));
-	}
 	else if (spec == 'p')
 		prstr = ft_itoa_base(va_arg(args, long long), hex, 0);
 	else if (spec == 'd' || spec == 'i')
@@ -77,15 +76,15 @@ char	*ft_apply_convert(char *prstr, char *convert, char spec)
 	int				i;
 
 	i = 0;
-	if (ft_check_convert(convert, spec))
-	{
+//	if (ft_check_convert(convert, spec))
+//	{
 		ft_build_convert(convert_fts, convert, &specifier1, &specifier2);
 		prstr = ft_run_length(prstr, specifier1, specifier2, spec);
 		while (convert_fts[i])
 		{
 			prstr = convert_fts[i++](prstr, spec);
 		}
-	}
+//	}
 	return (prstr);
 }
 

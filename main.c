@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 17:46:06 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/18 19:34:27 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/20 17:18:32 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,37 @@ int		main()
 	unsigned int X = 14;
 
 	p = 9;
-	/*
+
 //Tests with no specifiers
-	printf("hello, world!");
-	ft_printf("hello, world!");
-	printf("");
-	ft_printf("");
+	printf("hello, world!\n");
+	ft_printf("hello, world!\n");
+	printf("\n");
+	ft_printf("\n");
 	printf("\t\n\r\v\f\n");
 	ft_printf("\t\n\r\v\f\n");
 //Nospec tests with successive calls
 	printf("hello");  printf("world");
+	printf("\n");
 	ft_printf("hello"); ft_printf("world");
+	ft_printf("\n");
 	printf("he"); printf(" is alive");
+	printf("\n");
 	ft_printf("he"); ft_printf(" is alive");
+	ft_printf("\n");
 	printf("is alive"); printf(" he");
+	printf("\n");
 	ft_printf("is alive"); ft_printf(" he");
 //%% Tests
 
 	printf("\n");
-	printf("%%");
-	printf("%5%");
+	printf("%%\n");
+	printf("%5%\n");
 	printf("%-5%\n");
 	printf("%05%\n");
 	printf("yo%-05%\n");
 	ft_printf("\n");
-	ft_printf("%%");
-	ft_printf("%5%");
+	ft_printf("%%\n");
+	ft_printf("%5%\n");
 	ft_printf("%-5%\n");
 	ft_printf("%05%\n");
 	ft_printf("my%-05%\n");
@@ -77,20 +82,20 @@ printf("%.3s%.2s\n", "holla", "bitch");
 printf("1-%3.7s%7.7s\n", "hello", "world");
 printf("%7.3s%7.3s\n", "hello", "world");
 printf("%-7s%5s\n", "hello", "world");
-*/
+
 printf("1-%32s\n", NULL);
 printf("1-%.3s\n", "NULL");
-/*
+
 ft_printf("%-16s\n", "nark nark");
 ft_printf("%.3s%.2s\n", "holla", "bitch");
 ft_printf("2-%3.7s%7.7s\n", "hello", "world");
 ft_printf("%7.3s%7.3s\n", "hello", "world");
-*/
+
 ft_printf("%-7s%5s\n", "hello", "world");
 
 ft_printf("2-%32s\n", NULL);  /*printf wrirtes (null) ??? */
 ft_printf("2-%.3s\n", "NULL");
-/*
+
 printf("%*s\n", 32, "abc");
 printf("%-*s\n", 32, "abc");
 printf("%*i\n", 14, 94827);
@@ -100,7 +105,7 @@ ft_printf("%-*s\n", 32, "abc");
 ft_printf("%*i\n", 14, 94827);
 ft_printf("m%.*i\n", 6, -3);
 
-
+/*
 	printf("--------------printf\n");
 	printf("1-hello%-03c\n", 'a');
 
