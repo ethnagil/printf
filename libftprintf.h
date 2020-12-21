@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 17:09:20 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/19 19:53:08 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/21 14:21:52 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	*ft_run_length(char *str, int specifier1, int specifier2, char spec);
 void	*ft_flag_neg(char *str, char sp);
 void	*ft_flag_space(char *str, char sp);
 void	*ft_flag_zero(char *str, char sp);
+void	*ft_flag_hash(char *str, char sp);
 
 int		ft_elementof(char c, char *elements);
 char	*ft_itoa_base(long long int n, char *base, int neg);

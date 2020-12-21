@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 14:25:06 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/20 18:52:53 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/21 17:42:40 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ char	*ft_add_leading(char *str, int n)
 void	*ft_run_length(char *str, int specifier1, int specifier2, char spec)
 {
 	int		i;
-
-	if (specifier2 > 0)
+	i = ft_strlen(str);
+	if (specifier2 == 'n')
+		str[0] = '\0';
+	else if (specifier2 > 0)
 	{
-		i = ft_strlen(str);
-		if (ft_elementof(spec, "diouxX"))
+		if (ft_elementof(spec, "pdiouxX") && (specifier2 > i))
 		{
 			if (ft_elementof('-', str))
 				specifier2++;
@@ -50,6 +51,43 @@ void	*ft_run_length(char *str, int specifier1, int specifier2, char spec)
 	return (str);
 }
 
+void	*ft_flag_hash(char *str, char sp)
+{
+	char	*str2;
+	int		i;
+	int		j;
+
+	if (sp == 'p')
+	{
+		i = 0;
+		j = ft_strlen(str);
+		while (str[i] && (str[i] == ' '))
+			i++;
+		if (i > 1)
+		{
+			str[i - 2] = '0';
+			str[i - 1] = 'x';
+		}
+		else if (i == 1)
+		{
+			str[0] = 'x';
+			str2 = ft_c_to_str('0');
+		}
+		else if (i == 0)
+			str2 = ft_strdup("0x");
+		if (i <= 1)
+		{
+			str2 = ft_strjoin(str2, str);
+			free(str);
+			str = str2;
+		}
+		if ((str[j] == ' ') && (str[j + 1] == ' '))
+			str[j] = '\0';
+	}
+	return (str);		
+}
+
+
 void	*ft_flag_neg(char *str, char sp)
 {
 	int		i;
@@ -64,7 +102,7 @@ void	*ft_flag_neg(char *str, char sp)
 	i = ft_strlen(str);
 	while (str[j] == ' ')
 		j++;
-	while ((j + k) <= i)
+	while ((j + k) < i)
 	{
 		str2[k] = str[k + j];
 		k++;
