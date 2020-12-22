@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:00:21 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/21 17:42:49 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 17:35:13 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ int		ft_readconvert(char *convert, const char *format, int f, va_list args)
 	return (f);
 }
 
-char	*ft_va_argtostr(char spec, char *convert, va_list args)
+char	*ft_va_argtostr(char spec, char *convert, va_list args, int *cnull)
 {
 	char *prstr;
 
 	prstr = NULL;
 	if (spec == 'c')
 	{
-		printf("c as read-%c\n", (unsigned char)va_arg(args, int));
-//		prstr = ft_c_to_str((unsigned char)va_arg(args, int));
+		prstr = ft_c_to_str((unsigned char)va_arg(args, int), cnull, convert);
 	}
 	else if (spec == 's')
 		prstr = ft_strdup(va_arg(args, char *));
@@ -73,11 +72,15 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args)
 
 char	*ft_apply_convert(char *prstr, char *convert, char spec)
 {
-	flag_function	convert_fts[ft_strlen(convert)];
+//	flag_function	convert_fts[ft_strlen(convert)];
+	flag_function	*convert_fts;
 	int				specifier1;
 	int				specifier2;
 	int				i;
 
+	convert_fts = malloc(sizeof(flag_function) * (ft_strlen(convert) + 1));
+	if (!convert_fts)
+		return (0);
 	i = 0;
 	if (ft_check_convert(convert, spec))
 	{
@@ -90,6 +93,7 @@ char	*ft_apply_convert(char *prstr, char *convert, char spec)
 	}
 	if (spec == 'p')
 		prstr = ft_flag_hash(prstr, spec);
+	free(convert_fts);
 	return (prstr);
 }
 

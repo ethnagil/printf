@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_c_to_str.c                                      :+:      :+:    :+:   */
+/*   ft_insertstr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/16 17:45:08 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/22 16:57:18 by egillesp         ###   ########lyon.fr   */
+/*   Created: 2020/12/22 17:23:53 by egillesp          #+#    #+#             */
+/*   Updated: 2020/12/22 17:24:09 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libftprintf.h"
-
-char	*ft_c_to_str(char c, int *cnull, char *convert)
+char	*ft_insertstr(char *str, char *strins)
 {
-	char str[2];
+	char	*str2;
+	int		i;
+	int		j;
 
-	if (c == 0)
+	i = ft_strlen(strins) + ft_strlen(str);
+	if ((str2 = (char *)malloc(sizeof(char) * (i + 1))) != 0)
 	{
-		if (ft_elementof('-', convert))
-			*cnull = -1;
-		else
-			*cnull = 1;
+		i = 0;
+		while (strins[i])
+		{
+			str2[i] = strins[i];
+			i++;
+		}
+		j = 0;
+		while (str[j])
+			str2[i++] = str[j++];
+		str2[i] = '\0';
+		if (str)
+			free(str);
+		return(str2);
 	}
-	str[0] = c;
-	str[1] = '\0';
-	return (ft_strdup(str));
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 14:25:06 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/21 17:42:40 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/22 17:11:47 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_add_leading(char *str, int n)
 {
 	char *str2;
 
-	str2 = ft_c_to_str(' ');
+	str2 = ft_c_to_str(' ', NULL, NULL);
 	while (n-- > 1)
 		str2 = ft_strjoin(str2, " ");
 	str2 = ft_strjoin(str2, str);
@@ -39,12 +39,14 @@ void	*ft_run_length(char *str, int specifier1, int specifier2, char spec)
 			str = ft_add_leading(str, specifier2 - i);
 			str = ft_flag_zero(str, spec);
 		}
-		else if (spec == 's')
+		else if ((spec == 's') && (ft_strlen(str) > (unsigned long)specifier2))
 			str[specifier2] = '\0';
 	}
 	if (specifier1 > 0)
 	{
 		i = ft_strlen(str);
+		if ((i == 0) && (spec == 'c'))
+			i++;
 		if (i < specifier1)
 			str = ft_add_leading(str, specifier1 - i);
 	}
@@ -71,7 +73,7 @@ void	*ft_flag_hash(char *str, char sp)
 		else if (i == 1)
 		{
 			str[0] = 'x';
-			str2 = ft_c_to_str('0');
+			str2 = ft_c_to_str('0', NULL, NULL);
 		}
 		else if (i == 0)
 			str2 = ft_strdup("0x");
@@ -125,7 +127,7 @@ void	*ft_flag_space(char *str, char sp)
 	{
 		if (!ft_elementof('-', str))
 		{
-			str2 = ft_c_to_str(' ');
+			str2 = ft_c_to_str(' ', NULL, NULL);
 			str2 = ft_strjoin(str2, str);
 			if (str2[ft_strlen(str2) - 1] == ' ')
 				str2[ft_strlen(str2) - 1] = '\0';
