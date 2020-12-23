@@ -12,28 +12,53 @@
 
 #include "../libftprintf.h"
 
-char	*ft_itoa_base(long long int n, char *base, int neg)
+int		ft_intlen(long int n2, int basenum)
+{
+	int	i;
+
+	if (n2 < 0)
+	{
+		i = 1;
+		n2 = n2 * -1;
+	}
+	else
+		i = 0;
+	while ((n2) > 0)
+	{
+		n2 = n2 / basenum;
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_itoa_base(long long int n, char *base)
 {
 	char		*str;
-	long long	i;
+	long long	basenum;
+	int			len;
+	int			i;
 
-	i = ft_strlen(base);
+	basenum = ft_strlen(base);
+	len = ft_intlen(n, basenum);
+	if (!(str = (char *)malloc(sizeof(char) * (len + _PC_2_SYMLINKS))))
+		return (NULL);
 	if (n < 0)
 	{
-		neg = 1;
+		str[0] = '-';
 		n = n * -1;
 	}
-	if (!(str = (char *)malloc(sizeof(char) * (2 + neg))))
-		return (NULL);
-	if (n >= i)
-		str = ft_strjoin(ft_itoa_base(n / i, base, neg),
-				ft_itoa_base(n % i, base, 0));
-	else if (n < i)
+	str[len] = '\0';
+	if (n == 0)
 	{
-		if (neg == 1)
-			str[0] = '-';
-		str[0 + neg] = base[n];
-		str[1 + neg] = '\0';
+		str[0] = base[0];
+		str[1] = '\0';
+	}
+	while(n > 0)
+	{
+		i = n % basenum;
+		str[len - 1] = base[i];
+		n = n / basenum;
+		len--;
 	}
 	return (str);
 }

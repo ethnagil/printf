@@ -24,7 +24,7 @@ int		main()
 	unsigned int X = 14;
 
 	p = 9;
-
+/*
 //Tests with no specifiers
 	printf("hello, world!\n");
 	ft_printf("hello, world!\n");
@@ -93,7 +93,7 @@ ft_printf("%7.3s%7.3s\n", "hello", "world");
 
 ft_printf("%-7s%5s\n", "hello", "world");
 
-ft_printf("2-%32s\n", NULL);  /*printf wrirtes (null) ??? */
+ft_printf("2-%32s\n", NULL);  
 ft_printf("2-%.3s\n", "NULL");
 
 printf("%*s\n", 32, "abc");
@@ -105,7 +105,7 @@ ft_printf("%-*s\n", 32, "abc");
 ft_printf("%*i\n", 14, 94827);
 ft_printf("m%.*i\n", 6, -3);
 
-/*
+*/
 	printf("--------------printf\n");
 	printf("1-hello%-03c\n", 'a');
 
@@ -171,7 +171,7 @@ ft_printf("m%.*i\n", 6, -3);
 	ft_printf("%- 12.3u\n", 999999);
 	ft_printf("%- 12.3x\n", 14);
 	ft_printf("%0- 12X\n", 14);	
-*/
+
 	return (0);
 }
 //typedef struct		s_format

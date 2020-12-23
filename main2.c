@@ -3,10 +3,16 @@
 
 int	main()
 {
-/*
+	/*
+	printf("string%10c!\n", '\0');
+	ft_printf("string%10c!\n", '\0');
+	printf("%c!\n", '\0');
+	ft_printf("%c!\n", '\0');
+	
 	printf("1-p0 % .3s\n", "cccc");
 	ft_printf("2-f0 % .3s\n", "cccc");
-	printf("1-pp %.50d\n", 10000);
+	
+	printf("1-pp %50d\n", 10000);
 	ft_printf("2-fp %.50d\n", 10000);
 
 	printf("a1-%-5%\n");
@@ -60,15 +66,18 @@ ft_printf("d2-%.09s\n", NULL);
 
 	printf("a1-%-.00s\n", "hi low\0don't print me lol\0");
 	ft_printf("a2-%-.00s\n", "hi low\0don't print me lol\0");
+	
 
 printf("1a-%.4i\n", 5263);
 ft_printf("2a-%.4i\n", 5263);
+
 printf("1b-%.4i\n", -2372);
 ft_printf("2b-%.4i\n", -2372);
 printf("1c-%.3i\n", 13862);
 ft_printf("2c-%.3i\n", 13862);
 printf("1d-%.3i\n",-23646);
 ft_printf("2d-%.3i\n",-23646);
+
 
 printf("a %08.5i\n", 34);
 printf("b %010.5i\n", -216);
@@ -83,7 +92,7 @@ ft_printf("d2%08.3i\n", 8375);
 ft_printf("e2%08.3i\n", -8473);
 ft_printf("f2%08i\n", -8473);
 
-*/
+
 static char	a01;
 static unsigned char a02;
 static short a03;
@@ -96,7 +105,7 @@ static long long a09;
 static unsigned long long a10;
 static char *a11;
 static void *a12;
-/*
+
 printf("1 %p\n", NULL);
 printf("2 %5p\n", NULL);
 
@@ -145,8 +154,8 @@ ft_printf("g2%-70p%-70p%-70p%-70p%-70p%-70p%-70p%-70p%-70p%-70p%-70p%-70p\n",&a0
 ft_printf("i2%-16p%-16p%-16p%-16p%-16p%-16p%-16p%-16p%-16p%-16p%-16p%-16p\n",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);
 ft_printf("j2%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p%-8p\n",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);
 ft_printf("k2%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p%-32p\n",&a01,&a02,&a03,&a04,&a05,&a06,&a07,&a08,&a09,&a10,&a11,&a12);
-*/
-/*
+
+
 printf("a %c\n", '\0');
 printf("b %5c\n", '\0');
 printf("c %-5c\n", '\0');
@@ -154,14 +163,14 @@ printf("c %-5c\n", '\0');
 ft_printf("a1%c\n", '\0');
 ft_printf("b1%5c\n", '\0');
 ft_printf("c1%-5c\n", '\0');
-*/
+
 printf("d %c\n", -0);
 printf("e %c\n", 0);
 
 ft_printf("d1%c\n", -0);
 ft_printf("e1%c\n", 0);
+*/
 
-/*
 printf("f %-*.*s\n", 7, 3, "yolo");
 	
 printf("g %.*s\n", -3, "hello");
@@ -175,7 +184,11 @@ ft_printf("g1%.*s\n", -3, "hello");
 
 ft_printf("h1%-*.*s\n", -7, -3, "yolo");
 ft_printf("i1%.*i\n", -6, -3);
-*/
+
+while (1)
+{
+;	/* code */
+}
 
 	return (0);
 
