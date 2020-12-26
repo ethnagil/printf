@@ -36,11 +36,11 @@ char	*ft_itoa_base(long long int n, char *base)
 	char		*str;
 	long long	basenum;
 	int			len;
-	int			i;
+//	int			i;
 
-	basenum = ft_strlen(base);
-	len = ft_intlen(n, basenum);
-	if (!(str = (char *)malloc(sizeof(char) * (len + _PC_2_SYMLINKS))))
+//	basenum = ft_strlen(base);
+	len = ft_intlen(n, ft_strlen(base));
+	if (!(str = (char *)malloc(sizeof(char) * (len + 2))))
 		return (NULL);
 	if (n < 0)
 	{
@@ -55,9 +55,9 @@ char	*ft_itoa_base(long long int n, char *base)
 	}
 	while(n > 0)
 	{
-		i = n % basenum;
-		str[len - 1] = base[i];
-		n = n / basenum;
+	//	i = n % basenum;
+		str[len - 1] = base[n % ft_strlen(base)];
+		n = n / ft_strlen(base);
 		len--;
 	}
 	return (str);
