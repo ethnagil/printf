@@ -6,13 +6,13 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 17:36:17 by egillesp          #+#    #+#             */
-/*   Updated: 2021/01/04 17:33:36 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 17:33:21 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libftprintf.h"
 
-int		ft_intlen(long int n2, int basenum)
+int		ft_intlenp(unsigned long long int n2, int basenum)
 {
 	int	i;
 
@@ -31,19 +31,14 @@ int		ft_intlen(long int n2, int basenum)
 	return (i);
 }
 
-char	*ft_itoa_base(long long int n, char *base)
+char	*ft_itoa_basep(unsigned long long int n, char *base)
 {
 	char		*str;
 	int			len;
 
-	len = ft_intlen(n, ft_strlen(base));
+	len = ft_intlenp(n, ft_strlen(base));
 	if (!(str = (char *)malloc(sizeof(char) * (len + 2))))
 		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		n = n * -1;
-	}
 	str[len] = '\0';
 	if (n == 0)
 	{

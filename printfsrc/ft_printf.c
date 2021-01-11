@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:44:59 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/23 18:01:22 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/08 18:23:23 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args, int *cnull)
 	else if (spec == 's')
 		prstr = ft_strdup(va_arg(args, char *));
 	else if (spec == 'p')
-		prstr = ft_itoa_base(va_arg(args, long long), HEXLOW);
+		prstr = ft_itoa_basep(va_arg(args, unsigned long long), HEXLOW);
 	else if (spec == 'd' || spec == 'i')
 		prstr = ft_itoa_base((long long)(va_arg(args, int)), TEN);
 	else if (spec == 'u')
@@ -41,6 +41,53 @@ char	*ft_va_argtostr(char spec, char *convert, va_list args, int *cnull)
 	return (prstr);
 }
 
+int		ft_wildcard(int value, char *convert, char dot, int j)
+{
+	char	*wildcard;
+	int		k;
+
+	k = 0;
+	if ((value < 0) && (dot == '.'))
+	{
+		convert[j - 1] = 0;
+		return (j - 1);
+	}
+	wildcard = ft_itoa_base((long long)value, TEN);
+	if (!wildcard)
+		return (j);
+	while (wildcard[k])
+		convert[j++] = wildcard[k++];
+	free(wildcard);
+	return (j);
+}
+
+int		ft_readconvert(char *convert, const char *format, int f, va_list args)
+{
+	int		j;
+	int		value;
+	char	dot;
+
+	ft_bzero(convert, MAXCONV);
+	j = 0;
+	while (ft_elementof((char)format[++f], FLAGS))
+		if (!(ft_elementof((char)format[f], convert)))
+			convert[j++] = format[f];
+	while ((ft_isdigit(format[f])) || (ft_elementof((char)format[f], "-.")) ||
+		(ft_elementof((char)format[f], L_MODIFIER)))
+	{
+		if (format[f] == '*')
+		{
+			dot = format[f - 1];
+			value = va_arg(args, int);
+			j = ft_wildcard(value, convert, dot, j);
+			f++;
+		}
+		else
+			convert[j++] = format[f++];
+	}
+	return (f);
+}
+
 int		ft_print_variable(const char *format, va_list args, int *f)
 {
 	char	convert[MAXCONV];
@@ -48,11 +95,10 @@ int		ft_print_variable(const char *format, va_list args, int *f)
 	int		len;
 	int		cnull;
 
-	*f = *f + 1;
 	printstr = NULL;
 	cnull = 0;
 	*f = ft_readconvert(convert, format, *f, args);
-	if (format[*f])
+	if ((format[*f]) && (*f > 0))
 	{
 		printstr = ft_va_argtostr(format[*f], convert, args, &cnull);
 		len = ft_strlen(printstr);

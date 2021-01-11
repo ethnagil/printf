@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 17:23:53 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/22 17:24:09 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 09:47:00 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_insertstr(char *str, char *strins)
 		str2[i] = '\0';
 		if (str)
 			free(str);
-		return(str2);
+		return (str2);
 	}
 	return (0);
 }

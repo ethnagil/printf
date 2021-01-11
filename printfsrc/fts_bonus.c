@@ -14,49 +14,37 @@
 
 void	*ft_flag_hash(char *str, char sp)
 {
-	int	i;
-	int	j;
+	if ((str[0] == '0') && (ft_strlen(str) == 1) && (sp != 'p'))
+		return (str);
+	if ((sp == 'p') || (sp == 'x'))
+		str = ft_insertstr(str, "0x");
+	if (sp == 'X')
+		str = ft_insertstr(str, "0X");
+	return (str);
+}
 
-	if (sp == 'p')
-	{
-		i = 0;
-		j = ft_strlen(str);
-		while (str[i] && (str[i] == ' '))
-			i++;
-		if (i > 1)
-		{
-			str[i - 2] = '0';
-			str[i - 1] = 'x';
-		}
-		else if (i == 1)
-		{
-			str[0] = 'x';
-			str = ft_insertstr(str, "0");
-		}
-		else if (i == 0)
-			str = ft_insertstr(str, "0x");
-		if ((str[j] == ' ') && (str[j + 1] == ' '))
-			str[j] = '\0';
-	}
+void	*ft_flag_plus(char *str, char sp)
+{
+	if (((sp == 'd') || (sp == 'i')) && !ft_elementof('-', str))
+		str = ft_insertstr(str, "+");
 	return (str);
 }
 
 void	*ft_flag_space(char *str, char sp)
 {
-	int		i;
-	char	*str2;
+	int	i;
 
-	i = 0;
-	if (ft_elementof(sp, "dif"))
+	if ((sp == 'i') || (sp == 'd'))
 	{
-		if (!ft_elementof('-', str))
+		i = 0;
+		while (str[i])
 		{
-			str2 = ft_c_to_str(' ', NULL, NULL);
-			str2 = ft_strjoin(str2, str);
-			if (str2[ft_strlen(str2) - 1] == ' ')
-				str2[ft_strlen(str2) - 1] = '\0';
-			free(str);
-			str = str2;
+			if (str[i] == '+')
+			{
+				str[i] = ' ';
+				return (str);
+			}
+			i++;
 		}
 	}
 	return (str);

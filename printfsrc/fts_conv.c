@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 14:25:06 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/23 17:56:40 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 15:54:06 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ void	*ft_run_length(char *str, int specifier1, int specifier2, char spec)
 {
 	int		i;
 
-	i = ft_strlen(str);
-	if (specifier2 == 'n')
+	if ((specifier2 == 'n') && ((spec == 's') ||
+			((spec != 's') && (ft_strlen(str) == 1) && (str[0] == '0'))))
 		str[0] = '\0';
-	else if (specifier2 > 0)
+	else if ((specifier2 > 0) && (specifier2 != 'n'))
 	{
-		if (ft_elementof(spec, "pdiouxX") && (specifier2 > i))
+		if ((ft_elementof(str[0], "+-")) && (spec != 's') && (spec != 'c'))
+			specifier2++;
+		if (ft_elementof(spec, "pdiouxX") && (specifier2 > (int)ft_strlen(str)))
 		{
-			if (ft_elementof('-', str))
-				specifier2++;
-			str = ft_add_leading(str, specifier2 - i);
+			str = ft_add_leading(str, specifier2 - (int)ft_strlen(str));
 			str = ft_flag_zero(str, spec);
 		}
-		else if ((spec == 's') && (i > specifier2))
+		else if ((spec == 's') && ((int)ft_strlen(str) > specifier2))
 			str[specifier2] = '\0';
 	}
 	if (specifier1 > 0)
@@ -97,6 +97,11 @@ void	*ft_flag_zero(char *str, char sp)
 	if ((i > 0) && (str[i] == '-'))
 	{
 		str[0] = '-';
+		str[i] = '0';
+	}
+	if ((i > 0) && (str[i] == '+'))
+	{
+		str[0] = '+';
 		str[i] = '0';
 	}
 	return (str);

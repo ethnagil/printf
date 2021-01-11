@@ -6,7 +6,7 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 16:40:10 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/19 19:25:00 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 18:32:06 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_strdup(char *src)
 {
 	char	*src2;
 	int		strlen;
-//	size_t	i;
 
 	if (!src)
 		return (src);

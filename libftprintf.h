@@ -6,9 +6,20 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 17:09:20 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/23 18:00:45 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 10:10:36 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** Modular design to enable easy addition of new conversions
+** To add a new conversion module:
+**		- write a processus void *ft_newflag(char *str, char sp) and add the
+**						prototype below
+**		- add the conversion flag to #define FLAGS below
+**		- in ft_build_convert (fts_conv_apply.c), add
+**				if (convert[i] == 'newflag'
+**					convert_fts[i] = &ft_newflag;
+*/
 
 #ifndef LIBFTPRINTF_H
 
@@ -18,8 +29,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# define FLAGS "-0 *"
-# define L_MODIFIER "lh"
+# define FLAGS "-0+ #"
+# define L_MODIFIER "*lh"
 # define MAXCONV 25
 # define SPECIFIER "cspdiuxX"
 # define TEN "0123456789"
@@ -31,24 +42,25 @@ typedef void *(*t_flag_function)(char *, char);
 int		ft_printf(
 		const char *format, ...) __attribute__((__format__(__printf__,1,2)));
 int		ft_readconvert(char *convert, const char *format, int i, va_list args);
+int		ft_wildcard(int value, char *convert, char dot, int j);
 char	*ft_va_argtostr(char spec, char *convert, va_list args, int *cnull);
 char	*ft_apply_convert(char *prstr, char *convert, char spec);
 int		ft_check_convert(char *convert, char spec);
 void	ft_build_convert(t_flag_function *convert_fts, char *convert,
 			int *specifier1, int *specifier2);
-
+char	*ft_add_prefix(char *prstr, char *convert, char spec);
 void	*ft_run_length(char *str, int specifier1, int specifier2, char spec);
 void	*ft_flag_neg(char *str, char sp);
-void	*ft_flag_space(char *str, char sp);
 void	*ft_flag_zero(char *str, char sp);
 void	*ft_flag_hash(char *str, char sp);
-
+void	*ft_flag_plus(char *str, char sp);
+void	*ft_flag_space(char *str, char sp);
 int		ft_elementof(char c, char *elements);
+char	*ft_itoa_basep(unsigned long long int n, char *base);
 char	*ft_itoa_base(long long int n, char *base);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_c_to_str(char c, int *cnull, char *convert);
 char	*ft_insertstr(char *str, char *strins);
-
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_isdigit(int c);

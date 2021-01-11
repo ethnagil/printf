@@ -6,39 +6,23 @@
 /*   By: egillesp <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 15:00:21 by egillesp          #+#    #+#             */
-/*   Updated: 2020/12/23 17:55:59 by egillesp         ###   ########lyon.fr   */
+/*   Updated: 2021/01/07 14:34:06 by egillesp         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libftprintf.h"
 
-int		ft_readconvert(char *convert, const char *format, int f, va_list args)
+char	*ft_add_prefix(char *prstr, char *convert, char spec)
 {
-	int		j;
-	int		k;
-	char	*wildcard;
-
-	ft_bzero(convert, MAXCONV);
-	j = 0;
-	while ((ft_elementof((char)format[f], FLAGS)) ||
-		(ft_isdigit(format[f]) || (format[f] == '.')) ||
-		(ft_elementof((char)format[f], L_MODIFIER)))
-	{
-		if (format[f] == '*')
-		{
-			k = 0;
-			wildcard = ft_itoa_base((long long)va_arg(args, int), TEN);
-			while (wildcard[k])
-				convert[j++] = wildcard[k++];
-			j--;
-			free(wildcard);
-		}
-		else
-			convert[j] = format[f];
-		j++;
-		f++;
-	}
-	return (f);
+	(void)convert;
+	if ((spec == 'p') || (ft_elementof('#', convert) && ((spec == 'x') ||
+		(spec == 'X'))))
+		prstr = ft_flag_hash(prstr, spec);
+	if (ft_elementof('+', convert))
+		prstr = ft_flag_plus(prstr, spec);
+	if (ft_elementof(' ', convert))
+		prstr = ft_flag_plus(prstr, spec);
+	return (prstr);
 }
 
 char	*ft_apply_convert(char *prstr, char *convert, char spec)
@@ -52,17 +36,19 @@ char	*ft_apply_convert(char *prstr, char *convert, char spec)
 	if (!convert_fts)
 		return (0);
 	i = 0;
+	prstr = ft_add_prefix(prstr, convert, spec);
 	if (ft_check_convert(convert, spec))
 	{
 		ft_build_convert(convert_fts, convert, &specifier1, &specifier2);
+		if ((specifier2 == 'n') && (prstr[0] == '+') && (prstr[1] == '0') &&
+			(ft_strlen(prstr) == 2))
+			prstr[1] = 0;
 		prstr = ft_run_length(prstr, specifier1, specifier2, spec);
 		while (convert_fts[i])
 		{
 			prstr = convert_fts[i++](prstr, spec);
 		}
 	}
-	if (spec == 'p')
-		prstr = ft_flag_hash(prstr, spec);
 	free(convert_fts);
 	return (prstr);
 }
@@ -76,7 +62,7 @@ int		ft_check_convert(char *convert, char spec)
 	while (convert[i])
 	{
 		if ((convert[i] == '0') && ((ft_elementof('-', convert)) ||
-					(ft_elementof('.', convert))))
+			((ft_elementof('.', convert) && !ft_elementof(spec, "sc")))))
 		{
 			while (convert[i])
 			{
@@ -111,7 +97,11 @@ void	ft_build_convert_num(char *convert, int i, int *specifier1,
 			*specifier2 = 'n';
 		while (ft_isdigit(convert[i]))
 			*specifier2 = ((*specifier2 * 10) + (convert[i++] - 48));
-		*specifier2 *= neg;
+		if (neg == -1)
+		{
+			*specifier1 = *specifier2;
+			*specifier2 = 0;
+		}
 		if (*specifier2 == 0)
 			*specifier2 = 'n';
 	}
@@ -121,22 +111,22 @@ void	ft_build_convert(t_flag_function *convert_fts, char *convert,
 		int *specifier1, int *specifier2)
 {
 	int i;
-	int neg;
+	int j;
 
 	i = 0;
-	neg = 1;
+	j = 0;
 	*specifier1 = 0;
 	*specifier2 = 0;
-	while ((ft_elementof((char)convert[i], FLAGS)))
+	if (ft_elementof('-', convert))
+		convert_fts[i++] = &ft_flag_neg;
+	while ((ft_elementof((char)convert[j], FLAGS)))
 	{
-		if (convert[i] == '-')
-			convert_fts[i] = &ft_flag_neg;
-		if (convert[i] == ' ')
-			convert_fts[i] = &ft_flag_space;
-		if (convert[i] == '0')
-			convert_fts[i] = &ft_flag_zero;
-		i++;
+		if (convert[j] == '0')
+			convert_fts[i++] = &ft_flag_zero;
+		j++;
 	}
+	if (ft_elementof(' ', convert))
+		convert_fts[i++] = &ft_flag_space;
 	convert_fts[i] = NULL;
-	ft_build_convert_num(convert, i, specifier1, specifier2);
+	ft_build_convert_num(convert, j, specifier1, specifier2);
 }
